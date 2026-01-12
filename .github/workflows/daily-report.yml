@@ -1,0 +1,11 @@
+name: Trigger Daily Report
+on:
+  schedule:
+    - cron: '0 11 * * *' # 6 AM EST
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          curl -X GET ${{ secrets.APP_URL }}/api/cron/daily-report \
+          -H "Authorization: Bearer ${{ secrets.REPORT_SECRET }}"
