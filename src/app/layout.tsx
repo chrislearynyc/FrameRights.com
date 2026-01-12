@@ -15,7 +15,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "FrameRights | Clear License Documentation for Photographers",
+  title: "FrameRights — Clear, shareable image license records for photographers",
   description: "A calm, clear way to document how your photos are licensed. Join the waitlist.",
 };
 
