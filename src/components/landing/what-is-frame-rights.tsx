@@ -2,9 +2,9 @@ export function WhatIsFrameRights() {
   return (
     <section className="px-6 py-20 bg-slate-50 border-y border-slate-100">
       <div className="max-w-5xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-12">
+        <div className="flex flex-col md:flex-row justify-center gap-12 md:gap-24">
           {/* IS */}
-          <div>
+          <div className="flex flex-col items-center md:items-start">
             <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-6 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-green-500"></span>
               What FrameRights Is
@@ -40,7 +40,7 @@ export function WhatIsFrameRights() {
           </div>
 
           {/* IS NOT */}
-          <div>
+          <div className="flex flex-col items-center md:items-start">
             <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-6 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-slate-400"></span>
               What FrameRights Is Not
