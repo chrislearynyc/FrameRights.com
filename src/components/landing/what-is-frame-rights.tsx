@@ -1,3 +1,4 @@
+// WhatIsFrameRights component - displays comparison of what FrameRights is/isn't
 export function WhatIsFrameRights() {
   return (
     <section className="px-6 py-20 bg-slate-50 border-y border-slate-100">
