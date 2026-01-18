@@ -9,9 +9,15 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function GET(request: Request) {
   try {
     // 2. Validate Authorization
-    // This prevents random people from triggering your email report
+    // Vercel cron jobs send a special header for authentication
     const authHeader = request.headers.get("Authorization");
-    if (authHeader !== `Bearer ${process.env.REPORT_SECRET}`) {
+    const cronSecret = request.headers.get("x-vercel-cron-auth-key");
+
+    // Accept either Vercel's cron header or manual Bearer token
+    const isVercelCron = cronSecret === process.env.CRON_SECRET;
+    const isManualTrigger = authHeader === `Bearer ${process.env.REPORT_SECRET}`;
+
+    if (!isVercelCron && !isManualTrigger) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
@@ -54,9 +60,8 @@ export async function GET(request: Request) {
                 <h1 style="color: #333;">Daily Signups Report</h1>
                 <p><strong>${count}</strong> new people joined the waitlist in the last 24 hours.</p>
                 
-                ${
-                  count > 0
-                    ? `
+                ${count > 0
+        ? `
                 <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 14px;">
                     <thead>
                         <tr style="background-color: #f5f5f5;">
@@ -71,8 +76,8 @@ export async function GET(request: Request) {
                     </tbody>
                 </table>
                 `
-                    : '<p style="color: #666;">No activity today.</p>'
-                }
+        : '<p style="color: #666;">No activity today.</p>'
+      }
                 
                 <p style="margin-top: 30px; font-size: 12px; color: #888;">
                     Report generated at ${new Date().toLocaleString()}
