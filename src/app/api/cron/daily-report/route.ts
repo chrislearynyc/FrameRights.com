@@ -9,12 +9,11 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function GET(request: Request) {
   try {
     // 2. Validate Authorization
-    // Vercel cron jobs send a special header for authentication
+    // Vercel cron jobs send CRON_SECRET as Bearer token in Authorization header
     const authHeader = request.headers.get("Authorization");
-    const cronSecret = request.headers.get("x-vercel-cron-auth-key");
 
-    // Accept either Vercel's cron header or manual Bearer token
-    const isVercelCron = cronSecret === process.env.CRON_SECRET;
+    // Accept either Vercel's cron secret or manual REPORT_SECRET
+    const isVercelCron = authHeader === `Bearer ${process.env.CRON_SECRET}`;
     const isManualTrigger = authHeader === `Bearer ${process.env.REPORT_SECRET}`;
 
     if (!isVercelCron && !isManualTrigger) {
